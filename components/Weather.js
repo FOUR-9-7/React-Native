@@ -1,13 +1,16 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, ImageBackground, StyleSheet, View } from 'react-native'
 import Forecast from './Forecast';
 
 export default function Weather(props) {
 
     const [forecastInfo, setForecastInfo] = useState({
+        name: '-',
         main: '-',
         description: '-',
         temp: 0
+
+
 
 
 
@@ -20,9 +23,13 @@ export default function Weather(props) {
                 .then((response) => response.json())
                 .then((json) => {
                     setForecastInfo({
+                        name: json.name,
                         main: json.weather[0].main,
                         description: json.weather[0].description,
-                        temp: json.main.temp
+                        temp: json.main.temp,
+
+
+
                     });
                 })
                 .catch((error) => {
@@ -33,15 +40,16 @@ export default function Weather(props) {
 
     return (
         <ImageBackground source={require('../bg2.jpg')} style={styles.backdrop}>
-            <View style={{ backgroundColor: '#fffaf070', flex: 0.2 }}>
-                <Text style={styles.paragraph}>Zip Code {props.zipCode}{"\n"}
-             {props.main}{"\n"}
-             </Text>
+            <View>
+                
+                <Text style={styles.paragraph}>Zip Code is {props.zipCode}
+                
+                </Text>
+                
             </View>
+<Forecast {...forecastInfo}></Forecast>
 
 
-
-            <Forecast {...forecastInfo} />
 
 
         </ImageBackground>
@@ -53,23 +61,20 @@ export default function Weather(props) {
 const styles = StyleSheet.create({
     backdrop: {
         flexDirection: 'column',
-        justifyContent: 'center',
-
+        justifyContent: 'flex-start',
         width: '100%',
         height: '100%',
-        padding: 10
-    },
-    top: {
-        flex: 0.3,
-        backgroundColor: "grey",
-
+    
     },
     paragraph: {
+        
         margin: 24,
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
+      
     },
+
 
 
 
